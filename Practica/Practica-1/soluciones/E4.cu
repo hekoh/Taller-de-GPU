@@ -6,7 +6,7 @@
 #include <math.h>
 
 
-#define CUDA_BLK 32
+#define CUDA_BLK 32    //No puede ser mayor de 32 porque cuda no permite bloques de mas de 1024 hilos
 
 
 int *h_A, *h_B, *h_C, *h_check;
@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 	}
    }
    printf("tiempo de alocacion y inicializacion en CPU: %f\n", dwalltime() - timetick);
+
 /****** reservo memoria ******/
 
    timetick = dwalltime();
@@ -99,10 +100,8 @@ int main(int argc, char *argv[])
    }
 
    for(int i = 0; i < N; i++){
-        for(int j = 0; j < N; j++){
+        for(int j = 0; j < N; j++)
 		check = check && (h_check[i*N+j] == h_C[i*N+j]);
-		printf("check: %d   gpu: %d\n",h_check[i*N+j],h_C[i*N+j]);
-	}
    }
 
    
